@@ -12,8 +12,8 @@ function App() {
 
   const handleLogin = () => {
     Server.Login(name, pwd).then((res) => {
-      console.log(res.data)
       if (res.data.role === 'admin') {
+        localStorage.setItem('id', res.data.id)
         nav('admin')
       } else {
         localStorage.setItem('id', res.data.id)

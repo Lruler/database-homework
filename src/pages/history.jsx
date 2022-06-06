@@ -52,9 +52,6 @@ const History = () => {
     //   setData(newD)
     // })
 
-    Server.showHistoryByName('数据库管理系统').then((data) => {
-      console.log(data)
-    })
   }, [])
 
   const isEditing = (record) => record.key === editingKey;
@@ -135,16 +132,15 @@ const History = () => {
   };
 
   const onSearch = (id) => {
-    if (id) {
-      Server.searchBook(id).then((res) => {
-        setData([{ key: '0', ...res.data }])
+    if (!isNaN(+id)) {
+      Server.showHistoryById(id).then((res) => {
+        setData(res.data)
       })
     } else {
-      Server.getBookList().then((res) => {
-        let newD = res.data.map((u, i) => {
-          return { key: `${i}`, ...u }
-        })
-        setData(newD)
+      Server.showHistoryByName(id).then((res) => {
+        console.log(res.data)
+
+        setData(res.data)
       })
     }
   }
@@ -153,57 +149,32 @@ const History = () => {
     {
       title: 'id',
       dataIndex: 'id',
-      width: '25%',
+      width: '10%',
       editable: false,
     },
     {
-      title: 'name',
-      dataIndex: 'name',
+      title: 'book_name',
+      dataIndex: 'book_name',
       width: '15%',
       editable: true,
     },
     {
-      title: 'author',
-      dataIndex: 'author',
+      title: 'user_name',
+      dataIndex: 'user_name',
       width: '20%',
       editable: true,
     },
     {
-      title: 'number',
-      dataIndex: 'number',
+      title: 'borrow_date',
+      dataIndex: 'borrow_date',
       width: '20%',
       editable: true,
     },
     {
-      title: 'operation',
-      dataIndex: 'operation',
-      render: (_, record) => {
-        const editable = isEditing(record);
-        return editable ? (
-          <span>
-            <Typography.Link
-              onClick={() => save(record.key)}
-              style={{
-                marginRight: 8,
-              }}
-            >
-              Save
-            </Typography.Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a>Cancel</a>
-            </Popconfirm>
-          </span>
-        ) : (
-          <Space>
-            <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-              Edit
-            </Typography.Link>
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-              <a>Delete</a>
-            </Popconfirm>
-          </Space>
-        );
-      },
+      title: 'return_date',
+      dataIndex: 'return_date',
+      width: '20%',
+      editable: true,
     },
   ];
   const mergedColumns = columns.map((col) => {
@@ -224,16 +195,7 @@ const History = () => {
   });
   return (
     <>
-      <Button
-        onClick={handleAdd}
-        type="primary"
-        style={{
-          marginBottom: 16,
-        }}
-      >
-        Add a Book
-      </Button>
-      <Search placeholder="input Bookid" onSearch={onSearch} style={{ width: 200, marginLeft: 200 }} />
+      <Search placeholder="输入用户id或者书名" onSearch={onSearch} style={{ width: 200, marginLeft: 200 }} />
       <Form form={form} component={false}>
         <Table
           loadings

@@ -75,28 +75,63 @@ const MyBook = () => {
     }
   }
 
+  const returnBook = (book) => {
+    // 获取当前日期
+    var date = new Date();
+
+    // 获取当前月份
+    var nowMonth = date.getMonth() + 1;
+
+    // 获取当前是几号
+    var strDate = date.getDate();
+
+    // 添加分隔符“-”
+    var seperator = "-";
+
+    // 对月份进行处理，1-9月在前面添加一个“0”
+    if (nowMonth >= 1 && nowMonth <= 9) {
+      nowMonth = "0" + nowMonth;
+    }
+
+    // 对月份进行处理，1-9号在前面添加一个“0”
+    if (strDate >= 0 && strDate <= 9) {
+      strDate = "0" + strDate;
+    }
+
+    // 最后拼接字符串，得到一个格式为(yyyy-MM-dd)的日期
+    var nowDate = date.getFullYear() + seperator + nowMonth + seperator + strDate;
+    Server.returnBook(book.id, book.book_id, nowDate).then((data) => {
+      console.log(data)
+    })
+  }
   const columns = [
     {
       title: 'id',
       dataIndex: 'id',
-      width: '25%',
+      width: '10%',
       editable: false,
     },
     {
-      title: 'name',
-      dataIndex: 'name',
+      title: 'book_name',
+      dataIndex: 'book_name',
       width: '15%',
       editable: true,
     },
     {
-      title: 'author',
-      dataIndex: 'author',
+      title: 'user_name',
+      dataIndex: 'user_name',
       width: '20%',
       editable: true,
     },
     {
-      title: 'number',
-      dataIndex: 'number',
+      title: 'borrow_date',
+      dataIndex: 'borrow_date',
+      width: '20%',
+      editable: true,
+    },
+    {
+      title: 'return_date',
+      dataIndex: 'return_date',
       width: '20%',
       editable: true,
     },
@@ -105,7 +140,7 @@ const MyBook = () => {
       dataIndex: 'operation',
       render: (_, record) => {
         return (
-          <span>
+          <span onClick={() => {returnBook(record)}}>
             <a>
               还书
             </a>

@@ -123,15 +123,28 @@ const searchUser = (id) => {
 }
 
 
-const borrowBook = (book_id, user_id) => {
+const borrowBook = (book_id, user_id, borrow_date) => {
   return Fetch(`/user/borrow`, {
     method: "POST",
     data: {
       book_id,
-      user_id
+      user_id,
+      borrow_date
     }
   })
 }
+
+const returnBook = (id, book_id, return_date) => {
+  return Fetch('/user/return', {
+    method:"POST",
+    data: {
+      id,
+      book_id,
+      return_date
+    }
+  })
+}
+
 const Server = {}
 
 
@@ -155,6 +168,7 @@ Server.searchUser = searchUser
 
 
 Server.borrowBook = borrowBook
+Server.returnBook = returnBook
 
 
 
