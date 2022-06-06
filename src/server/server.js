@@ -90,7 +90,7 @@ const showHistoryByName = (name) => {
 }
 
 const showHistoryById = (id) => {
-  return Fetch(`/history/listbybookname/${id}`)
+  return Fetch(`/history/listbyuserid/${id}`)
 }
 
 const addUser = (userInfo) => {
@@ -121,6 +121,17 @@ const modifyUser = (userInfo) => {
 const searchUser = (id) => {
   return Fetch(`/user/search/${id}`)
 }
+
+
+const borrowBook = (book_id, user_id) => {
+  return Fetch(`/user/borrow`, {
+    method: "POST",
+    data: {
+      book_id,
+      user_id
+    }
+  })
+}
 const Server = {}
 
 
@@ -141,6 +152,9 @@ Server.deleteUser = deleteUser
 Server.getUserList = getUserList
 Server.modifyUser = modifyUser
 Server.searchUser = searchUser
+
+
+Server.borrowBook = borrowBook
 
 
 

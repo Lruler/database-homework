@@ -39,17 +39,21 @@ const EditableCell = ({
   );
 };
 
-const History= () => {
+const History = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
 
   useEffect(() => {
-    Server.getBookList().then((res) => {
-      let newD = res.data.map((u, i) => {
-        return { key: `${i}`, ...u }
-      })
-      setData(newD)
+    // Server.getBookList().then((res) => {
+    //   let newD = res.data.map((u, i) => {
+    //     return { key: `${i}`, ...u }
+    //   })
+    //   setData(newD)
+    // })
+
+    Server.showHistoryByName('数据库管理系统').then((data) => {
+      console.log(data)
     })
   }, [])
 
@@ -57,10 +61,11 @@ const History= () => {
 
   const edit = (record) => {
     form.setFieldsValue({
+      book_id: '',
+      borrow_date: '',
       id: '',
-      name: '',
-      author: '',
-      number: '',
+      return_date: '',
+      user_id: '',
       ...record,
     });
     setEditingKey(record.key);

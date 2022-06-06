@@ -1,29 +1,27 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router';
 import Server from '../server/server'
 import './login.less'
-
-
 function App() {
 
   const [name, setName] = useState('');
   const [pwd, setPwd] = useState('');
 
+  const nav = useNavigate()
+
+
   const handleLogin = () => {
-    Server.getUserList().then((d) => {
-      console.log(d)
-    })
-    console.log(name, pwd)
-    Server.Login(name, pwd).then((d) => {
-      console.log(d)
+    Server.Login(name, pwd).then((res) => {
+      console.log(res.data)
+      if (res.data.role === 'admin') {
+        nav('admin')
+      } else {
+        localStorage.setItem('id', res.data.id)
+        nav('user')
+      }
+
     })
   }
-
-
-
-
-
-
-
 
   return (
     <div className='login-page'>

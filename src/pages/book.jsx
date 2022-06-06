@@ -229,7 +229,7 @@ const Book= () => {
       >
         Add a Book
       </Button>
-      <Search placeholder="input Bookid" onSearch={onSearch} style={{ width: 200, marginLeft: 200 }} />
+      <Search placeholder="input BookName" onSearch={onSearch} style={{ width: 200, marginLeft: 200 }} />
       <Form form={form} component={false}>
         <Table
           loadings

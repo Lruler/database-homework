@@ -6,7 +6,6 @@ import {
   MenuFoldOutlined,
   UserOutlined,
   VideoCameraOutlined,
-  UploadOutlined,
 } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import './home.css'
@@ -14,7 +13,7 @@ import './home.css'
 const { Header, Sider, Content } = Layout;
 
 
-const Home = () => {
+const Borrow = () => {
   const [collapsed, setCollapsed] = useState(false);
   const nav = useNavigate()
   return (
@@ -29,25 +28,17 @@ const Home = () => {
             {
               key: '1',
               icon: <UserOutlined />,
-              label: '用户表',
+              label: '我的图书',
               onClick: () => {
-                nav('user')
+                nav('mybook')
               }
             },
             {
               key: '2',
               icon: <VideoCameraOutlined />,
-              label: '书籍表',
+              label: '图书列表',
               onClick: () => {
-                nav('book')
-              }
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: '书籍历史表',
-              onClick: () => {
-                nav('history')
+                nav('books')
               }
             },
           ]}
@@ -80,4 +71,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Borrow;
